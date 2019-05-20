@@ -5,19 +5,14 @@ var exphbs = require('express-handlebars');
 var routes = require('./controllers/burger_controller.js');
 
 var app = express();
+var orm = require("./config/orm.js");
 var PORT = process.env.PORT || 3030;
 
-app.use('/static', express.static(__dirname + '/public'));
-
-app.use(bodyParser.urlencoded({
-    extended: false
-}))
-
-app.engine('handelbars', exphbs({
-    defaultLayout: 'main'
-}));
-
-app.set('view engine', 'handlebars');
+app.engine("handlebars", exphbs());
+app.set("view engine", "handlebars");
+app.use(express.static("./public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use('/', routes);
 
